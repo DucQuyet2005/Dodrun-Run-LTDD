@@ -5,4 +5,157 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"/>
+    tools:context=".MainActivity"
+    android:background="@drawable/road">
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="89dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/setting"
+        app:tint="#FF5722" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="68dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/question" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="240dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="72dp"
+        android:background="@drawable/start_tran"
+        android:backgroundTint="#00BCD4"
+        android:backgroundTintMode="src_in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/start_tran" />
+
+    <TextView
+        android:id="@+id/tvHighScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="High Score:0"
+        android:textAlignment="viewStart"
+        android:textColor="#FF5722"
+        android:textFontWeight="@integer/material_motion_duration_medium_2"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imgBtnChooseCar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/imgBtnChooseCar"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_marginTop="48dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:srcCompat="@drawable/f1_gold_tran" />
+
+    <Button
+        android:id="@+id/btnPlay"
+        android:layout_width="125dp"
+        android:layout_height="48dp"
+        android:backgroundTint="#FF5722"
+        android:elevation="0dp"
+        android:stateListAnimator="@null"
+        android:text="Play"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="italic"
+        android:translationZ="0dp"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgBtnChooseCar" />
+
+    <RadioGroup
+        android:id="@+id/rdoGroup"
+        android:layout_width="242dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RadioButton
+            android:id="@+id/rdoDiff"
+            android:layout_width="87dp"
+            android:layout_height="33dp"
+            android:layout_marginBottom="16dp"
+            android:lineSpacingExtra="8sp"
+            android:text="Difficult"
+            android:textColor="#FF5722"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <RadioButton
+            android:id="@+id/rdoMedi"
+            android:layout_width="99dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="16dp"
+            android:lineSpacingExtra="8sp"
+            android:text="Medium"
+            android:textColor="#FF5722"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <RadioButton
+            android:id="@+id/rdoEasy"
+            android:layout_width="103dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="16dp"
+            android:buttonTint="#FF5722"
+            android:checked="true"
+            android:lineSpacingExtra="8sp"
+            android:text="Easy"
+            android:textColor="#FF5722"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="11dp"
+        android:labelFor="@+id/rdoGroup"
+        android:text="Choose the level you want to break"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/rdoGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPlay" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
