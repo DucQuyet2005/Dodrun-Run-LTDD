@@ -70,7 +70,12 @@ public class AccidentActivity extends AppCompatActivity {
         tvHighScore.setText("High Score: " + highScore);
 
         // --- Nút ---
-        btnBackToHome.setOnClickListener(v -> finish()); // quay lại MainActivity
+        btnBackToHome.setOnClickListener(v -> {
+            Intent intent = new Intent(AccidentActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish(); // đóng AccidentActivity
+        });
         btnPlayAgain.setOnClickListener(v -> {
             Intent intent = new Intent(AccidentActivity.this, GameActivity.class);
             startActivity(intent);
