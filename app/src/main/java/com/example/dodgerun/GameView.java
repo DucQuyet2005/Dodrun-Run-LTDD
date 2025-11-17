@@ -6,9 +6,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -209,29 +211,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    public boolean onTouchEvent(MotionEvent event)
-    {
-        if (car == null || Paused) return false;
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
-                float touchX = event.getX();
-//                int screenWidth = getWidth();
-
-                // Nếu người chơi chạm/kéo ở nửa phải màn hình => sang phải
-                if (touchX > screenWidth / 2f) {
-                    car.switchLane(true);
-                } else {
-                    car.switchLane(false);
-                }
-                break;
-        }
-
-        return true;
-    }
-
-
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         boolean retry = true;
@@ -250,7 +229,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         if (canvas == null) return;
 
-        canvas.drawColor(Color.TRANSPARENT, android.graphics.PorterDuff.Mode.CLEAR);
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         // Vẽ xe
         if (car != null) car.draw(canvas);
@@ -272,5 +251,31 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                // Vẽ text ở góc phải (Dùng scorePaint đã cài đặt)
                        canvas.drawText(scoreBuilder, 0, scoreBuilder.length(), x, y, scorePaint);
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // Kiểm tra điều kiện
+        if (car == null || Paused) {
+            return false;
+        }
+
+        int action = event.getAction();
+
+        // Chỉ xử lý khi chạm hoặc kéo
+        if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
+            float touchX = event.getX();
+            int screenWidth = getWidth();
+
+            // Logic điều khiển
+            if (touchX > screenWidth / 2f) {
+                car.switchLane(true);  // Chuyển sang làn phải
+            } else {
+                car.switchLane(false); // Chuyển sang làn trái
+            }
+        }
+        // Nếu là ACTION_UP (1) hoặc ACTION_CANCEL (3), không làm gì cả
+
+        return true; // Consume event
     }
 }
