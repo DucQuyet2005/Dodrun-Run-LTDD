@@ -24,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton imgBtnChooseCar;
     private RadioGroup rdoGroup;
 
-    private final int DIFFICULTY_EASY = 7;
-    private final int DIFFICULTY_MEDIUM =12 ;
-    private final int DIFFICULTY_HARD = 16;
+    private final int DIFFICULTY_EASY = 10;
+    private final int DIFFICULTY_MEDIUM =20 ;
+    private final int DIFFICULTY_HARD = 60;
 
     private final int REQUEST_CODE_CHOOSE_CAR = 100;
     

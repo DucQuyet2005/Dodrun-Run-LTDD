@@ -17,9 +17,9 @@
         <activity
             android:name=".AccidentActivity"
             android:exported="false" />
-        <activity
-            android:name=".PauseActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".PauseActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".GameActivity"
             android:exported="false" />

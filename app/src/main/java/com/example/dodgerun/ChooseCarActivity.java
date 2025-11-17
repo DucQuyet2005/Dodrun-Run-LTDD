@@ -14,6 +14,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.Random;
+
 public class ChooseCarActivity extends AppCompatActivity {
 
     private TextView tvHighScore;
@@ -21,7 +23,7 @@ public class ChooseCarActivity extends AppCompatActivity {
     private ImageView imgvCar;
     private Button btnRandom,btnChoose;
 
-    private  int[] carList =new int[]{R.drawable.f1_gold_tran,R.drawable.f1_red_tran};
+    private  int[] carList =new int[]{R.drawable.f1_gold_tran,R.drawable.f1_red_tran,R.drawable.blackcar_removebg};
 
     private int currentIndex=0;
 
@@ -80,5 +82,19 @@ public class ChooseCarActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        //button random logical
+        Random random = new Random();
+
+        btnRandom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int randomIndex = random.nextInt(carList.length);
+                currentIndex = randomIndex;
+
+                imgvCar.setImageResource(carList[currentIndex]);
+            }
+        });
+
     }
 }

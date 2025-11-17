@@ -107,8 +107,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        int screenWidth = getWidth();
-        int screenHeight = getHeight();
+        screenWidth = getWidth();
+        screenHeight = getHeight();
 
         // Tạo xe
         car = new PlayerCar(getContext(), screenWidth, screenHeight, SelectedCarID);
