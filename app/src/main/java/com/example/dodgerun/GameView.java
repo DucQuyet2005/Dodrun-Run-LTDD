@@ -2,6 +2,8 @@ package com.example.dodgerun;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,9 +17,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import androidx.annotation.NonNull;
-
-import java.util.ArrayList;
+//import androidx.annotation.NonNull;
+//
+//import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -30,7 +32,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public static final String SCORE="score";
 
-    private int[] obstacleImages = {
+    private final int[] obstacleImages = {
             R.drawable.obstac1_tran ,
             R.drawable.obstac2_tran,
             R.drawable.obstac3_tran,
@@ -45,7 +47,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private int lastLevelUpScore = 0;
     private int speed;
     private PlayerCar car;
-    private Obstacle obstacle;
+//    private Obstacle obstacle;
 
     private boolean gameOver=false;
 
@@ -53,8 +55,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Paint scorePaint;
 
     private boolean Paused=false;
+    private ScoreManager scoreManager;
 
     private int SelectedCarID=R.drawable.f1_gold_tran;
+
+    private Bitmap bgBitmap;
+    private int bgY1 = 0, bgY2 = 0;
+    private int bgSpeed = 10; // tốc độ nền
+
     private Random random=new Random();
 
     public GameView(Context context) {
@@ -70,7 +78,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 scorePaint = new Paint();
                 scorePaint.setColor(getResources().getColor(R.color.high_score));
                 scorePaint.setTextSize(60);
-                scorePaint.setAntiAlias(true); // Làm chữ mượt hơn
+                scorePaint.setAntiAlias(true);
         scoreBuilder=new StringBuilder();
         setZOrderOnTop(true);
         getHolder().setFormat(PixelFormat.TRANSPARENT);
@@ -109,9 +117,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder) {
         screenWidth = getWidth();
         screenHeight = getHeight();
+         screenWidth = getWidth();
+         screenHeight = getHeight();
+
+        bgBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.road);
+
+        bgBitmap = Bitmap.createScaledBitmap(bgBitmap, screenWidth, screenHeight, true);
+
+        bgY1 = 0;
+        bgY2 = -screenHeight;
+
 
         // Tạo xe
         car = new PlayerCar(getContext(), screenWidth, screenHeight, SelectedCarID);
+        scoreManager=new ScoreManager(activity);
 
         gameThread = new GameThread(getHolder(), this);
         gameThread.setRunning(true);
@@ -128,9 +147,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         long now = System.currentTimeMillis();
 //        List<Obstacle> obstaclesToRemove = new ArrayList<>();
 
-        // ===============================
         //  Cập nhật vật cản hiện có
-        // ===============================
         for (Obstacle obs : obstacleList) {
             obs.update();
 
@@ -138,6 +155,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             if (Rect.intersects(obs.getRect(), car.getRect()) && !gameOver) {
                 gameOver = true;
                 Paused = true;
+
+                scoreManager.saveHighScore(score);
+                scoreManager.saveRecentScores(score);
 
                 post(() -> {
                     if (activity != null) {
@@ -178,7 +198,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             int safeDistance = (int) (getHeight() * 0.4f); // cách nhau tối thiểu 60% chiều cao màn hình
 
             for (Obstacle obs : obstacleList) {
-                // Nếu obstacle hiện có nằm trong phạm vi dọc "quá gần" obstacle sắp spawn
+                // Nếu obstacle hiện có nằm trong phạm vi dọc quá gần obstacle sắp spawn
                 if (Math.abs(obs.getRect().top - (-200)) < safeDistance) {
                     tooClose = true;
                     break;
@@ -209,6 +229,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             lastLevelUpScore = score; // cập nhật mốc lần tăng độ khó gần nhất
         }
 
+        // Update background
+        bgY1 += bgSpeed;
+        bgY2 += bgSpeed;
+
+        if (bgY1 >= screenHeight) {
+            bgY1 = bgY2 - screenHeight;
+        }
+
+        if (bgY2 >= screenHeight) {
+            bgY2 = bgY1 - screenHeight;
+        }
+
+
     }
 
     @Override
@@ -231,6 +264,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
+        canvas.drawBitmap(bgBitmap, 0, bgY1, null);
+        canvas.drawBitmap(bgBitmap, 0, bgY2, null);
+
         // Vẽ xe
         if (car != null) car.draw(canvas);
 
@@ -238,8 +274,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         for (Obstacle obs : obstacleList) {
             obs.draw(canvas);
         }
-        // --- TỐI ƯU HÓA HIỂN THỊ ĐIỂM ---
-                // Tái sử dụng StringBuilder để tránh tạo String mới
+        // TỐI ƯU HÓA HIỂN THỊ ĐIỂM
                 scoreBuilder.setLength(0); // Xóa builder
                 scoreBuilder.append("Score: ").append(score);
 

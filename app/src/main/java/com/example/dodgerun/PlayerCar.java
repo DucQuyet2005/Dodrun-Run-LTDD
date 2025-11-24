@@ -21,10 +21,10 @@ public class PlayerCar {
         // Load ảnh gốc
         Bitmap original = BitmapFactory.decodeResource(context.getResources(), resId);
 
-        // ✅ Tính chiều rộng 1 làn đường
+        // Tính chiều rộng 1 làn đường
         int laneWidth = screenWidth / 3; // bạn có thể thay đổi tỉ lệ nếu muốn 2 làn rõ hơn
 
-        // ✅ Scale xe = 1 làn (hoặc nhỏ hơn chút, ví dụ 0.8f để xe nằm gọn)
+        // Scale xe = 1 làn (hoặc nhỏ hơn chút, ví dụ 0.8f để xe nằm gọn)
         float scaleRatio = 0.8f; // 80% chiều rộng làn
         carWidth = (int) (laneWidth * scaleRatio);
 
@@ -35,7 +35,7 @@ public class PlayerCar {
         // Scale ảnh
         bitmap = Bitmap.createScaledBitmap(original, carWidth, carHeight, true);
 
-        // ✅ Tính các vị trí làn dựa theo carWidth mới
+        // Tính các vị trí làn dựa theo carWidth mới
         leftLaneX = screenWidth / 4 - carWidth / 2;
         rightLaneX = (int) (screenWidth * 0.63f - carWidth / 2);
 
