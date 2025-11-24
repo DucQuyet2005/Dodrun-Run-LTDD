@@ -2,6 +2,7 @@ package com.example.dodgerun;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import java.util.Random;
 
 public class ChooseCarActivity extends AppCompatActivity {
 
@@ -21,9 +23,12 @@ public class ChooseCarActivity extends AppCompatActivity {
     private ImageView imgvCar;
     private Button btnRandom,btnChoose;
 
-    private  int[] carList =new int[]{R.drawable.f1_gold_tran,R.drawable.f1_red_tran};
+    private final int[] carList =new int[]{R.drawable.f1_gold_tran,R.drawable.f1_red_tran};
 
     private int currentIndex=0;
+
+    private ScoreManager scoreManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,5 +85,22 @@ public class ChooseCarActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        btnRandom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChooseCarActivity.this,MainActivity.class);
+                Bundle bundle = new Bundle();
+                Random random=new Random();
+                int index= random.nextInt(carList.length);
+                bundle.putInt(MainActivity.SELECTED_CARID,carList[index]);
+                imgvCar.setImageResource(carList[index]);
+                Log.d("ChooseCarActivity","CarID"+carList[index]);
+            }
+        });
+
+        scoreManager=new ScoreManager(ChooseCarActivity.this);
+        
+        tvHighScore.setText("High Score"+String.valueOf(scoreManager.getHightScore()));
     }
 }

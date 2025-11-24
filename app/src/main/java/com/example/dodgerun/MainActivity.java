@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private static int Key_Xe=R.drawable.f1_gold_tran;//Mac dinh la xe mau vang
     private static int Key_Kho=R.id.rdoEasy;//Mac dinh la de
 
+    private ScoreManager scoreManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         tvHighScore = findViewById(R.id.tvHighScore);
+        scoreManager=new ScoreManager(MainActivity.this);
+        tvHighScore.setText("High Score"+String.valueOf(scoreManager.getHightScore()));
         btnPlay = findViewById(R.id.btnPlay);
         imgBtnChooseCar = findViewById(R.id.imgBtnChooseCar);
         rdoGroup=findViewById(R.id.rdoGroup);
