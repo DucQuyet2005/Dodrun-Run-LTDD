@@ -26,7 +26,7 @@ public class ChooseCarActivity extends AppCompatActivity {
     private Button btnRandom,btnChoose;
 
     private  int[] carList =new int[]{R.drawable.f1_gold_tran,R.drawable.f1_red_tran,R.drawable.blackcar_removebg};
-    private final int[] carList =new int[]{R.drawable.f1_gold_tran,R.drawable.f1_red_tran};
+    //private final int[] carList =new int[]{R.drawable.f1_gold_tran,R.drawable.f1_red_tran};
 
     private int currentIndex=0;
 

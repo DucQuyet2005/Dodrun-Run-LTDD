@@ -39,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "GamePrefs";
     private static final String PREF_HIGH_SCORE = "HighScore";
 
+    // Recent Score
+    private Button btnRecentScores;
+
+
     private ScoreManager scoreManager;
 
     @Override
@@ -92,6 +96,15 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtras(bundle);
             startActivity(intent);
         });
+
+        // Recent Score
+        btnRecentScores = findViewById(R.id.btnRecentScores);
+
+        btnRecentScores.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, RecentScoreActivity.class);
+            startActivity(intent);
+        });
+
     }
 
     @Override
