@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.util.Log;
 
 public class PlayerCar {
     private Bitmap bitmap;
@@ -47,12 +48,20 @@ public class PlayerCar {
         canvas.drawBitmap(bitmap, x, y, null);
     }
 
+// Sửa method switchLane trong PlayerCar.java
+
     public void switchLane(boolean moveRightLane) {
+        int oldX = x;
+
         if (moveRightLane) {
             x = rightLaneX;
+            Log.d("PlayerCar", "Switched to RIGHT lane: " + oldX + " → " + x);
         } else {
             x = leftLaneX;
+            Log.d("PlayerCar", "Switched to LEFT lane: " + oldX + " → " + x);
         }
+
+        Log.d("PlayerCar", "Current position: x=" + x + ", y=" + y);
     }
 
     public void resetPosition() {
